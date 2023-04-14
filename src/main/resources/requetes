@@ -1,0 +1,52 @@
+create table users (
+    id int auto_increment primary key not null ,
+    nom varchar(200) not null,
+    prenom varchar(200) not null,
+    email varchar(200) not null,
+    username varchar(20) not null,
+    password varchar(100) not null,
+    datenaissance date not null,
+    actif boolean default true not null,
+    UNIQUE KEY `email_UNIQUE` (`email`)
+);
+alter table users
+add UNIQUE KEY `username` (`username`);
+
+create table roles (
+   `role_id` int(11) NOT NULL AUTO_INCREMENT,
+   `name` varchar(45) NOT NULL,
+   PRIMARY KEY (`role_id`)
+);
+
+CREATE TABLE `users_roles` (
+       `user_id` int(11) NOT NULL,
+       `role_id` int(11) NOT NULL,
+       KEY `user_fk_idx` (`user_id`),
+       KEY `role_fk_idx` (`role_id`),
+       CONSTRAINT `role_fk` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`),
+       CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+);
+
+creation des roles :
+INSERT INTO `roles` (`name`) VALUES ('USER');
+INSERT INTO `roles` (`name`) VALUES ('ADMIN');
+
+creation users :
+
+INSERT INTO `users`
+    (`nom`, `prenom`, `email`,`username`,`password`,`datenaissance`,`actif`)
+VALUES
+    ('Ngadjui', 'Zeph', 'ngadjuiz@3il.fr','zelyon08','#Noubs22','2000-08-23',true);
+
+INSERT INTO `users`
+    (`nom`, `prenom`, `email`,`username`,`password`,`datenaissance`,`actif`)
+VALUES
+    ('Tchomte', 'ivan', 'Tchomt@3il.fr','TChomte08','#Tchomte24','1999-12-25',true);
+
+creation user-roles :
+
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 1);
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (1, 2);
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (2, 1);
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (3, 2);
+INSERT INTO `users_roles` (`user_id`, `role_id`) VALUES (6, 2);
