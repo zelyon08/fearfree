@@ -1,1 +1,7 @@
-configuration de l'autentification : https://www.codejava.net/frameworks/spring-boot/spring-boot-security-role-based-authorization-tutorial
+connexion :
+ ADMIN :
+    - username : zelyon09
+    - password : #Noubs22
+ USER :
+    - username : Yvana9
+    - password : #Yvana22

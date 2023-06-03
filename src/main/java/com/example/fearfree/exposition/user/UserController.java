@@ -25,7 +25,7 @@ public class UserController {
     private UserManagement userManagement;
 
     @GetMapping(value = "/UsersList", produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasAuthority('ADMIN')")
+    //@PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Map<String, Object>> getAllUsers()
             throws SQLException {
 
