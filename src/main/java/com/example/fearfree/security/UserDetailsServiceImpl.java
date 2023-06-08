@@ -16,13 +16,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private IJpaUserRepository userRepository;
 
     @Override
-    public MyUserDetails loadUserByUsername(String username)
+    public MyUserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        Optional<User> user = userRepository.getUserByUsername(username);
+        Optional<User> user = userRepository.getUserByUseremail(email);
 
         return user.map(MyUserDetails::new)
-                .orElseThrow(()-> new UsernameNotFoundException("User not find "+username));
-
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
     }
 
 }

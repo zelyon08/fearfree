@@ -11,4 +11,8 @@ public interface IJpaUserRepository extends JpaRepository<User, Integer>, JpaSpe
 
     @Query("SELECT u FROM User u WHERE u.username = :username")
     public Optional<User> getUserByUsername(@Param("username") String username);
+
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    public Optional<User> getUserByUseremail(@Param("email") String email);
+
 }

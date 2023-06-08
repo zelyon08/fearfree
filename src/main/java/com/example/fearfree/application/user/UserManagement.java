@@ -35,6 +35,15 @@ public class UserManagement {
         return userRepository.findUserById(id);
     }
 
+    public Optional<User> findUserByEmail(String email){
+        return iJpaUserRepository.getUserByUseremail(email);
+    }
+
+    public Optional<User> findUserByUsername(String username){
+        return iJpaUserRepository.getUserByUsername(username);
+    }
+
+
     public User UpdateUser(User user){
         Optional<User> user1 = userRepository.findUserById(user.getId());
         if(user1.isPresent()){

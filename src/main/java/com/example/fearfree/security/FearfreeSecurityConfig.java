@@ -1,22 +1,17 @@
 package com.example.fearfree.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
+import org.springframework.security.oauth2.client.InMemoryOAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -29,6 +24,10 @@ public class FearfreeSecurityConfig  {
         return new UserDetailsServiceImpl();
     }
 
+    @Bean
+    public OAuth2AuthorizedClientService authorizedClientService(ClientRegistrationRepository clientRegistrationRepository) {
+        return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
+    }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -48,9 +47,10 @@ public class FearfreeSecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/User/saveUser").permitAll()
+                .requestMatchers("/User/UsersList").permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/User/**").authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .httpBasic()
                 .and()
@@ -59,5 +59,10 @@ public class FearfreeSecurityConfig  {
                 .and().build();
     }
 
+    /*
+    @Bean
+    public AuthenticationManager authenticationManager() throws Exception {
+        return authenticationManager();
+    } */
 
 }

@@ -1,12 +1,11 @@
 package com.example.fearfree.domain.user;
 
+import com.example.fearfree.domain.historique.Historique;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -38,6 +37,17 @@ public class User {
     )
     private Set<Role> roles = new HashSet<>();
 
+    /*
+    @OneToMany
+    @JoinTable(
+            name = "Historique",
+            joinColumns = @JoinColumn(name = "idUser")
+    )
+    private List<Historique> historiques = new ArrayList<>();
+
+
+     */
+
     public User(int id, String nom, String prenom, String email, String username, String password, Timestamp date, boolean actif) {
         this.id = id;
         this.nom = nom;
@@ -52,6 +62,20 @@ public class User {
     public User() {
 
     }
+
+    public Timestamp getDatenaissance() {
+        return datenaissance;
+    }
+/*
+    public List<Historique> getHistoriques() {
+        return historiques;
+    }
+
+    public void setHistoriques(List<Historique> historiques) {
+        this.historiques = historiques;
+    }
+
+ */
 
     public int getId() {
         return id;
@@ -87,6 +111,39 @@ public class User {
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setDatenaissance(Timestamp datenaissance) {
+        this.datenaissance = datenaissance;
+    }
+
+    public void setActif(boolean actif) {
+        this.actif = actif;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public void setPassword(String password) {
