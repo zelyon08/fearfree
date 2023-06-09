@@ -4,6 +4,8 @@ import com.example.fearfree.domain.user.IJpaUserRepository;
 import com.example.fearfree.domain.user.User;
 import com.example.fearfree.domain.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +58,23 @@ public class UserManagement {
     public User addUser(User user){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.addUser(user);
+    }
+
+    public User authenticateUser(String username, String password) {
+        // Recherche de l'utilisateur dans la base de données en fonction du nom d'utilisateur
+        Optional<User> user = iJpaUserRepository.getUserByUseremail(username);
+
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        // Vérification du mot de passe
+        if (!passwordEncoder.matches(password, user.get().getPassword())) {
+            throw new BadCredentialsException("Invalid password");
+        }
+
+        // Authentification réussie
+        return user.get();
     }
 
     public void  deleteUser(int id){
